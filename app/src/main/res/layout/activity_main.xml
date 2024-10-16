@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/securityCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/security_code"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/targetText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="creditCardSecurityCode"
+        android:hint="@string/minimun_order_price"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/startBotButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_bot"/>
+
+    <Button
+        android:id="@+id/StopBotButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stop"/>
+
+
+
+    <Button
+        android:id="@+id/btCaptureScreenShot"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="Take ScreenShot"
+        android:textColor="@android:color/white" />
+
+
+
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="#ccc"
+        android:src="@drawable/img1"
+        android:padding="5dp" />
+
+
+
+
+
+</LinearLayout>
