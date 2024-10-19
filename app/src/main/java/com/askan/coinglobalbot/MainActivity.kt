@@ -98,14 +98,13 @@ class MainActivity : AppCompatActivity() {
 
             startBotButton.setOnClickListener {
                 if(isLogin) {
-                    sleep(200)
                     if (isAccessibilityServiceEnabled()) {
                         startBotService()
                     } else {
                         openAccessibilitySettings()
                     }
                 }else{
-                    Toast.makeText(this, "Something went wrong! \nplease close this app and try again", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Something went wrong! \nplease close this app and try again. Or Contract with developer: \nEmail: sultanahedaskan@gmail.com", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -149,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                     isLogin = true
                     f= true
                 }
-                Toast.makeText(this, "Welcome $logEmail ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Welcome  ", Toast.LENGTH_LONG).show()
             }
         }
         return f
@@ -180,9 +179,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, BotService::class.java)
         val sec = securityCode.text.toString()
         val mini = miniOrderPrice.text.toString()
-        if (sec.isNotEmpty() && mini.isNotEmpty()) {
+        if (sec.isNotEmpty() && (mini.isNotEmpty())) {
             Toast.makeText(this,"Starting bot with  \nSecurity Code: $sec \nMinimum Price: $mini", Toast.LENGTH_SHORT).show()
-            intent.putExtra(BotService.constants.EXTRA_SECURITY_CODE, sec)
+            intent.putExtra(BotService.constants.SECURITY_CODE, sec)
             intent.putExtra(BotService.constants.MINI_ORDER_PRICE, mini)
             startService(intent)
         }else{
