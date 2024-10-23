@@ -6,7 +6,9 @@ import android.accessibilityservice.AccessibilityService
 import android.content.Intent
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.EditText
 import android.widget.Toast
+import com.askan.coinglobalbot.BotService.constants.ACCOUNT_UID
 import com.askan.coinglobalbot.BotService.constants.MINI_ORDER_PRICE
 import com.askan.coinglobalbot.BotService.constants.SECURITY_CODE
 import java.lang.Thread.sleep
@@ -16,6 +18,8 @@ class BotService : AccessibilityService() {
     private var itemSelected = false
     private lateinit var securityCode:String
     private var miniOrderPrice: Int = 100
+    private lateinit var accountUid:String
+    private var isServiceAccess = false
 
 /*
     private var screenCaptureService: ScreenCaptureService? = null// ServiceConnection to manage the connection to the service
@@ -47,7 +51,8 @@ class BotService : AccessibilityService() {
         if (intent != null) {
             securityCode = intent.getStringExtra(SECURITY_CODE).toString()
             miniOrderPrice = Integer.parseInt(intent.getStringExtra(MINI_ORDER_PRICE).toString())
-            println("Security Code: $securityCode Mini Order Price: $miniOrderPrice")
+            accountUid = intent.getStringExtra(ACCOUNT_UID).toString()
+            println("Security Code: $securityCode \nMini Order Price: $miniOrderPrice \nAccountUid: $accountUid")
             openTargetApp()
         }
         return START_STICKY
@@ -61,15 +66,15 @@ class BotService : AccessibilityService() {
             Toast.makeText(this, "Package Not Found", Toast.LENGTH_SHORT).show()
         }
     }
+
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
+                if(!isServiceAccess) {
+                    checkServiceAccess()
+                    return
+                }
                 val source = event.source ?: return
                 performv1(source, miniOrderPrice, securityCode)
-                val buyPage = findBuyPage(source)
-                if(buyPage != null){
-                  //  performv2(buyPage)
-                }else{
-                   //
-                }
+
                 /*
             if ((fnwtk(source, miniOrderPrice))?.performAction(AccessibilityNodeInfo.ACTION_CLICK)!!) {
                 if (fillInputAndConfirm(securityCode!!)) {
@@ -79,9 +84,6 @@ class BotService : AccessibilityService() {
                 }
             }*/
     }
-
-
-
 
 
     //version 2.0
@@ -108,14 +110,12 @@ class BotService : AccessibilityService() {
         }
     }
     private fun findNodeWithTk(root: AccessibilityNodeInfo, miniOrderPrice: Int):Boolean {
-        val start = System.currentTimeMillis()
         try {
             for (j in 2 until root.childCount) {
                 val listItem = root.getChild(j)
                 if ((listItem.getChild(1).text.removeSuffix("TK").toString().toDouble()) > miniOrderPrice) {
                     if (listItem.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                         itemSelected = true
-                        println("List item clicked in: ${System.currentTimeMillis() - start}")
                         return true
                     }
                 }
@@ -166,7 +166,7 @@ class BotService : AccessibilityService() {
     //version 1.0
     private fun performv1(nodeInfo: AccessibilityNodeInfo,miniOrderPrice: Int, input:String){
         if(!itemSelected) {
-            if (fnwtk(nodeInfo, miniOrderPrice) != null) {
+            if (findNodeWithTk(nodeInfo, miniOrderPrice)) {
                 itemSelected = true
                 if (fillInputAndConfirm(input)) {
                     println("Success")
@@ -184,16 +184,6 @@ class BotService : AccessibilityService() {
                     if ((nodeInfo.text.removeSuffix("TK").toString().toDouble()) > miniOrderPrice) {
                         nodeInfo.parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                         return nodeInfo.parent
-                       /* var parent = nodeInfo.parent
-                        while (parent != null) {
-                            if (parent.isClickable) {
-                                println("This node is clickable $parent")
-                                count = 0
-                                return parent
-                            }
-                            parent = parent.parent
-                            println("${count--}This node parent of target price")
-                        } */
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -216,7 +206,8 @@ class BotService : AccessibilityService() {
     }
     private fun fillInputAndConfirm(input: String): Boolean {
         var attempts = 0
-        while (attempts < 100) {
+        sleep(20)
+        while (attempts < 3) {
             println("Attemps: $attempts")
             try {
                 val result = findNodeByClassName(rootInActiveWindow, "android.widget.EditText")
@@ -234,11 +225,11 @@ class BotService : AccessibilityService() {
                 }else{
                  //   println("Input field not found, retrying...")
                     attempts++
-                    sleep(20)  // Small delay before retry
+                    sleep(10)  // Small delay before retry
                 }
             } catch (_: Exception) {
                 println("Exception ocer")
-                sleep(100)
+
             }
         }
         return false
@@ -273,9 +264,6 @@ class BotService : AccessibilityService() {
     override fun onInterrupt() {
         // Handle service interruption
     }
-
-
-
     private fun findBuyPage(root: AccessibilityNodeInfo): AccessibilityNodeInfo? {
         val start = System.currentTimeMillis()
         val text = root.text?.toString() // Convert to string if it's a CharSequence
@@ -293,6 +281,77 @@ class BotService : AccessibilityService() {
             }
         }
        return null
+    }
+
+
+
+
+
+    //Check Service access of user
+    private fun  checkServiceAccess(){
+        println("Check Service Access ")
+        if(findTabAndClick("my")){
+            println("My Tab Clicked Successfuly")
+            val uid = findUid("UID", rootInActiveWindow)
+            println("UID FROM SCREEN: $uid")
+            if(uid != null){
+                if(uid == accountUid){
+                    isServiceAccess = true
+                    findTabAndClick("buy")
+                }else{
+                    Toast.makeText(this, "BOT SERVICE NOT REGISTERED FOR THIS ACCOUNT!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun findUid(text: String, nodeInfo: AccessibilityNodeInfo): String? {
+        if(nodeInfo.text != null && nodeInfo.text.toString().contains("UID")){
+           return (nodeInfo.parent.getChild(2).text.toString())
+        };
+
+        for(j in 0 until nodeInfo.childCount){
+            val child = nodeInfo.getChild(j)
+            if(child != null){
+                val uid = findUid(text, child)
+                if(uid != null){
+                    return uid
+                }
+            }
+        }
+        return null
+    }
+
+    private fun findTabAndClick(text:String): Boolean {
+        val node =findNodeByTextFromEnd(text, rootInActiveWindow )
+        if(node != null){
+            node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            return true
+        }
+        return true
+    }
+
+    // Updated version to allow recursive search through children
+    private fun findNodeByTextFromEnd(text: String, node: AccessibilityNodeInfo): AccessibilityNodeInfo? {
+        // Check if this node contains the required text
+        println("Searching my")
+        if (node.text != null && node.text.toString() == text) {
+            return node
+        }
+        println("Searching my 2")
+        // Traverse children from last to first
+        for (j in node.childCount - 1 downTo 0) {
+            val child = node.getChild(j)
+            if (child != null) {
+                // Recursively search within this child node
+                val foundNode = findNodeByTextFromEnd(text, child)
+                if (foundNode != null) {
+                    println("my found")
+                    return foundNode
+                }
+            }
+        }
+        return null
     }
 
 
@@ -318,5 +377,8 @@ class BotService : AccessibilityService() {
         const val EXTRA_SECURITY_CODE = "com.askan.coinglobalbot.extra.SECURITY_CODE"
         const val SECURITY_CODE  = "com.askan.coinglobalbot.extra.SECURITY_CODE"
         const val MINI_ORDER_PRICE = "com.askan.coinglobalbot.extra.MINI_ORDER_PRICE"
+        const val ACCOUNT_UID = "com.askan.coinglobalbot.extra.ACCOUN_UID"
     }
+
+
 }

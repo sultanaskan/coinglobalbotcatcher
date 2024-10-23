@@ -15,4 +15,19 @@
     <string name="start_bot">Start Bot</string>
     <string name="go_to_screen_capture_control">Go To Screen Capture Control</string>
     <string name="stop">STOP</string>
+    <string name="user_registration">User Registration</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="coinglobal_account_uid">CoinGlobal Account uid</string>
+    <string name="coin_global_security_code">Coin global security code</string>
+    <string name="don_t_have_an_account_register_here">Don\'t have an account? Register here</string>
+    <string name="login">Login</string>
+    <string name="selected_user_none">Selected User: None</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="revoke_permission">Revoke Permission</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="manage_user_permissions">Manage User Permissions</string>
+    <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
 </resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- State when an item is pressed or clicked -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#6200EE" /> <!-- Purple color when pressed -->
+        </shape>
+    </item>
+
+    <!-- State when an item is selected/activated -->
+    <item android:state_activated="true">
+        <shape>
+            <solid android:color="#BB86FC" /> <!-- Lighter purple when activated -->
+        </shape>
+    </item>
+
+    <!-- Default state -->
+    <item>
+        <shape>
+            <solid android:color="@android:color/transparent" /> <!-- Transparent when not selected -->
+        </shape>
+    </item>
+</selector>
