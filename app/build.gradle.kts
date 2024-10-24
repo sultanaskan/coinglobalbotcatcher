@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.gms.google-services") version "4.4.2" apply false
+    
 }
 
 buildscript {
@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     // Firebase Authentication
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.v2211)
     implementation(libs.firebase.auth)

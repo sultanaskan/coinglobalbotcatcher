@@ -158,7 +158,7 @@ class LoginFragment : Fragment() {
     private fun scheduleProfileDeletion() {
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(activity, DeleteProfileReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE )
 
         // Set the alarm to go off after 12 hours
         val triggerTime = Calendar.getInstance().timeInMillis + 6 * 60 * 60 * 1000
