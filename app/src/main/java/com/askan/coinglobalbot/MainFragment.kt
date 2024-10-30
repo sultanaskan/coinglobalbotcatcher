@@ -2,6 +2,7 @@ package com.askan.coinglobalbot
 
 
 import android.accessibilityservice.AccessibilityServiceInfo
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +27,6 @@ import com.google.gson.Gson
 
 class MainFragment : Fragment() {
 
-    private lateinit var securityCode: EditText
     private lateinit var miniOrderPrice: EditText
     private lateinit var startBotButton: Button
     private lateinit var btnmanageusers: Button
@@ -48,7 +49,6 @@ class MainFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         // Initialize UI components
-        securityCode = view.findViewById(R.id.securityCode)
         miniOrderPrice = view.findViewById(R.id.targetText)
         startBotButton = view.findViewById(R.id.startBotButton)
         btnmanageusers = view.findViewById(R.id.btnManageUser)
@@ -90,17 +90,21 @@ class MainFragment : Fragment() {
 
         // Stop bot button action
         stopButton.setOnClickListener {
-            openAccessibilitySettings()
             stopBotService()
         }
 
         return view
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun stopBotService() {
         val intent = Intent(requireContext(), BotService::class.java)
-        requireActivity().stopService(intent)
-        Toast.makeText(requireContext(), "Coin global bot stopped successfully!", Toast.LENGTH_SHORT).show()
+            intent.putExtra(BotService.constants.SECURITY_CODE, "stop")
+            intent.putExtra(BotService.constants.MINI_ORDER_PRICE, "999999")
+            intent.putExtra(BotService.constants.ACCOUNT_UID, "stop")
+            requireActivity().stopService(intent)
+            Toast.makeText(requireContext(), "Bot stop successfully", Toast.LENGTH_SHORT).show()
+            ActivityCompat.finishAffinity(requireActivity())
     }
 
     private fun startBotService() {

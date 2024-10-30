@@ -11,7 +11,6 @@ class DeleteProfileReceiver : BroadcastReceiver() {
         val editor = sharedPre.edit()
         editor.remove("user_profile")
         editor.apply()
-
-        Toast.makeText(context, "User profile deleted after 12 hours", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "User profile deleted", Toast.LENGTH_SHORT).show()
     }
 }

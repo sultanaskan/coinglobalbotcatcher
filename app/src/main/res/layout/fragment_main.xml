@@ -1,61 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center"
+    android:padding="20dp"
+    tools:ignore="ExtraText">
 
-    <EditText
-        android:id="@+id/securityCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:hint="@string/security_code"
-        android:inputType="text" />
+    <!-- Improved ImageView with scale type -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/circle_shape"
+        android:scaleType="centerCrop"
+        android:clipToOutline="true"
+        app:srcCompat="@drawable/plogo" />
 
+
+    <!-- Improved EditText with border and background color -->
     <EditText
         android:id="@+id/targetText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints="creditCardSecurityCode"
-        android:hint="@string/minimun_order_price"
-        android:inputType="text" />
+        android:hint="@string/minimum_order_price"
+        android:padding="12dp"
+        android:layout_margin="15dp"
+        android:textSize="20sp"
+        android:inputType="number"
+        android:gravity="center" />
 
+    <!-- Start Bot Button with rounded corners and elevation -->
     <Button
         android:id="@+id/startBotButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start_bot" />
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_background"
+        android:text="@string/start_bot"
+        android:elevation="4dp" />
 
+    <!-- Stop Bot Button with rounded corners and elevation -->
     <Button
         android:id="@+id/StopBotButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/stop" />
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:background="@drawable/button_background"
+        android:text="@string/stop"
+        android:elevation="4dp" />
+
+    <!-- Logout Button with rounded corners and elevation -->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout" />
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_background"
+        android:text="Logout"
+        android:elevation="4dp" />
 
-
+    <!-- Manage User Permissions Button (initially invisible) -->
     <Button
         android:id="@+id/btnManageUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_background"
         android:visibility="invisible"
         android:text="@string/manage_user_permissions"
-        android:textColor="@android:color/white" />
+        android:elevation="4dp" />
 
-
-    <ImageView
-        android:id="@+id/imageView"
+    <!-- Linear Layout for About Us and About Developer -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="#ccc"
-        android:src="@drawable/img1"
-        android:padding="5dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
+        <!-- About Us TextView -->
+        <TextView
+            android:id="@+id/aboutUs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginEnd="30dp"
+            android:text="About Us" />
+
+        <!-- About Developer TextView -->
+        <TextView
+            android:id="@+id/aboutDeveloper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginStart="30dp"
+            android:text="About Developer" />
+    </LinearLayout>
 
 </LinearLayout>

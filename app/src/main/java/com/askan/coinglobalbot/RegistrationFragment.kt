@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -25,6 +26,7 @@ class RegistrationFragment : Fragment() {
     private var registerButton: Button? = null
     private var mAuth: FirebaseAuth? = null
     private lateinit var user: UserProfile
+    private lateinit var loadingProgressBar: ProgressBar
 
 
     @SuppressLint("MissingInflatedId")
@@ -43,9 +45,12 @@ class RegistrationFragment : Fragment() {
         uidField = view.findViewById(R.id.editTextUid)
         passwordField = view.findViewById(R.id.editTextPassword)
         registerButton = view.findViewById(R.id.buttonRegister)
+        loadingProgressBar = view.findViewById(R.id.loadingProgressBar)
+
 
 
         registerButton?.setOnClickListener {
+            loadingProgressBar.visibility = View.VISIBLE
             // Get the input values
             user = UserProfile(
             uid  = null,
@@ -56,7 +61,7 @@ class RegistrationFragment : Fragment() {
             securityCode = securityCodeField?.text.toString().trim(),
             password = passwordField?.text.toString().trim(),
             rule = "user",
-            accountAccess = "draft"
+            accountAccess = "draft",
             )
             registerUser(user.email!!, user.password!!) { u ->
                 if(u != null) {
@@ -71,6 +76,9 @@ class RegistrationFragment : Fragment() {
                         }
                     }
                     println("Register user uid  : $u")
+                    loadingProgressBar.visibility = View.GONE
+                }else{
+                    loadingProgressBar.visibility = View.GONE
                 }
             }
 

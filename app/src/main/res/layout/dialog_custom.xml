@@ -16,8 +16,32 @@
     <Spinner
         android:id="@+id/action_bar_spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="40dp"/>
+        android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:padding="15dp"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:layout_margin="10dp"
+        android:text="Today`s Date: "
+        android:id="@+id/todayDateTextView"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:layout_margin="10dp"
+        android:inputType="number"
+        android:hint="Access for __ days"
+        android:id="@+id/accessDaysEditText"
+        />
 
     <Button
         android:id="@+id/dialogButton"

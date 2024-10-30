@@ -7,29 +7,54 @@
     android:focusable="false"
     android:focusableInTouchMode="false">
 
-    <TextView
-        android:id="@+id/usernameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:textSize="18sp"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
 
-    <TextView
-        android:id="@+id/emailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textSize="14sp"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+        <TextView
+            android:id="@+id/usernameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="18sp"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+
+        <TextView
+            android:id="@+id/coinglobaluid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="coin global uid"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
     <TextView
         android:id="@+id/accontAccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="Account Access"
+        android:textSize="14sp"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+    <TextView
+        android:id="@+id/accessInTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+    <TextView
+        android:id="@+id/accessOutTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="14sp"
         android:focusable="false"
         android:focusableInTouchMode="false" />

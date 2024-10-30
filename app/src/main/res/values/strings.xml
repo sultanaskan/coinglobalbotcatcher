@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Coin global bot</string>
+    <string name="app_name">METa MAX</string>
     <string name="accessibility_service_description">This is accessibility services onfiguration</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -30,4 +30,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="manage_user_permissions">Manage User Permissions</string>
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
+    <string name="minimum_order_price">Minimum order price\n</string>
+    <string name="search_user_hint">Search users with username,email or uid</string>
+    <string name="search">search_button\n\n</string>
 </resources>

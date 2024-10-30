@@ -5,16 +5,96 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
+
     <!-- Title -->
-    <TextView
-        android:id="@+id/adminTitle"
+
+
+    <!-- Search bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Users: loading..."
+            android:textSize="20dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:textAlignment="center"
+            android:id="@+id/totalUsersTextView"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:textSize="15dp"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ENABLED: loading..."
+                android:layout_weight="1"
+                android:textColor="#008000"
+                android:id="@+id/enabledUsersTextView"/>
+
+            <TextView
+
+                android:textSize="15dp"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#FFEB3B"
+                android:text="DISABLED: loading..."
+                android:id="@+id/disabledUsersTextView"/>
+            <TextView
+                android:textSize="15dp"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DRAFT: loading..."
+                android:layout_weight="1"
+                android:textColor="#6F6D6D"
+                android:id="@+id/draftUsersTextView"/>
+            <TextView
+                android:textColor="#FF0000"
+                android:textSize="15dp"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DRAFT: loading..."
+                android:layout_weight="1"
+                android:id="@+id/expiredUsersTextView"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <EditText
+            android:id="@+id/searchUserEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_search"
+            android:padding="20dp"
+            android:hint="@string/search_user_hint"
+            />
+
+    <!-- ProgressBar for loading -->
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/manage_user_permissions"
-        android:textSize="24sp"
-        android:textStyle="bold"
         android:layout_gravity="center"
-        android:layout_marginBottom="24dp" />
+        android:visibility="gone"/>
+
 
     <!-- ListView to display users -->
     <ListView
@@ -34,4 +114,6 @@
         android:text ="BACK TO BOT CONTROLLER SCREEN"
         android:padding="12dp"
         android:layout_marginTop="8dp" />
+
+
 </LinearLayout>
