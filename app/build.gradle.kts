@@ -12,11 +12,13 @@ buildscript {
 
 
 android {
-    namespace = "com.askan.coinglobalbot"
+   namespace = "com.askan.coinglobalbot"
+    //    namespace = "com.askan.metamaxpkr"
     compileSdk = 34
 
     defaultConfig {
         applicationId = "com.askan.coinglobalbot"
+        //   applicationId = "com.askan.metamaxpkr"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

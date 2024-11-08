@@ -1,5 +1,6 @@
 package com.askan.coinglobalbot
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
@@ -34,6 +35,7 @@ class UserAdapter(
         return position.toLong()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View
         val holder: ViewHolder
@@ -60,11 +62,11 @@ class UserAdapter(
         holder.emailTextView.text = user.email
         holder.accountAccess.text = user.accountAccess
         holder.coinglobaluid.text = user.accountUid
-        if(user.accountAccess == "enable"){
+        if(user.accountAccess.equals("enable") && user.accountAccess!! !=  "disable" && user.accountAccess != "draft"){
             if (user.accessInTime!! > 0L) {
                 holder.accessInTime.text = "Access Enable From: ${convertMillisToDate(user.accessInTime!!)}"
 
-                val remaining = ((user.accessOutTime!! - user.accessInTime!!) / (1000 * 60 * 60 * 24))
+                val remaining = ((user.accessOutTime!! - System.currentTimeMillis()) / (1000 * 60 * 60 * 24))
                 if (user.accessOutTime!! > 0L && user.accountAccess == "enable" && remaining > 0) {
                     holder.accessOutTime.text = "Remaining Time: ${remaining} days"
                 }

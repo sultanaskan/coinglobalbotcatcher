@@ -16,12 +16,16 @@ import com.askan.coinglobalbot.BotService.constants.SECURITY_CODE
 import java.lang.Thread.sleep
 
 class BotService : AccessibilityService() {
-    private val appPackageName = "com.coinglobal.bdt"
+    //  private val appPackageName = "com.coinglobal.bdt"
+    // private val currency = "TK"
+      private val appPackageName = "com.exchange.pkr"
+     private val currency = "PKR"
     private var itemSelected = false
     private lateinit var securityCode:String
     private var miniOrderPrice: Int = 100
     private  var accountUid:String? = null
     private var isServiceAccess = false
+    private lateinit var securityTextBundle: Bundle
 
 
 /*
@@ -75,18 +79,20 @@ class BotService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
+      //  println("Event found")
                 if(!isServiceAccess) {
+                    println("Account need check!")
                     if(accountUid != null  ){
                         checkServiceAccess()
+                        createTextInput(securityCode)
                     }
                     return
                 }
                 val source= event.source ?: return
-                performv1(source, miniOrderPrice, securityCode)
-
+                performv3(source)
+               // performv1(source)
         //  findNodeWithCheckPageAndTk(miniOrderPrice)
-
-                /*
+        /*
             if ((fnwtk(source, miniOrderPrice))?.performAction(AccessibilityNodeInfo.ACTION_CLICK)!!) {
                 if (fillInputAndConfirm(securityCode!!)) {
                     println("Order processed successfully!")
@@ -95,6 +101,43 @@ class BotService : AccessibilityService() {
                 }
             }*/
     }
+
+
+    //version 3.0
+    private fun performv3(root: AccessibilityNodeInfo):  Boolean{
+        try {
+            for (j in 2 until root.childCount) {
+                val listItem = root.getChild(j)
+                if ((listItem.getChild(1).text.removeSuffix(currency).toString()
+                        .toDouble()) > miniOrderPrice
+                ) {
+                    if (listItem.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                       val root1 = rootInActiveWindow ?: return false
+                        try {
+                            val result = findNodeByClassName(root1)
+                            val edit = result["editText"]
+                            val buy = result["buyOrder"]
+                            if (edit != null && buy != null ) {
+                            //    println("Successfully buy and filed found in ${System.currentTimeMillis() - start}")
+                                if (edit.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, securityTextBundle)) {
+                                    if( buy.performAction(AccessibilityNodeInfo.ACTION_CLICK)){
+                                //        println("Successfully clicked in ${System.currentTimeMillis() - start}")
+                                        return true
+                                    }
+                                }
+                            }
+                        } catch (_: Exception) {
+                            println("Exception ")
+                        }
+                    }
+                }
+            }
+        }catch (_:Exception){}
+        return false
+    }
+
+
+
 
 
     //version 2.0
@@ -115,20 +158,21 @@ class BotService : AccessibilityService() {
                     i++
                 }
         }else{
-            if (!(findNodeWithTk(buyPage, miniOrderPrice))) {
+            if (!(findNodeWithTk(buyPage))) {
                 itemSelected = false
             }
         }
     }
-    private fun findNodeWithTk(root: AccessibilityNodeInfo, miniOrderPrice: Int):Boolean {
+    private fun findNodeWithTk(root: AccessibilityNodeInfo):Boolean {
         try {
             for (j in 2 until root.childCount) {
                     val listItem = root.getChild(j)
-                    if ((listItem.getChild(1).text.removeSuffix("TK").toString()
+                    if ((listItem.getChild(1).text.removeSuffix(currency).toString()
                             .toDouble()) > miniOrderPrice
                     ) {
                         if (listItem.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                             itemSelected = true
+
                             return true
                         }
                     }
@@ -146,7 +190,7 @@ class BotService : AccessibilityService() {
              if(text.contains("pages/buy/index")) {
                 for (j in 2 until buy.childCount) {
                     val listItem = buy.getChild(j)
-                    if ((listItem.getChild(1).text.removeSuffix("TK").toString()
+                    if ((listItem.getChild(1).text.removeSuffix(currency).toString()
                             .toDouble()) > miniOrderPrice
                     ) {
                         if (listItem.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
@@ -190,8 +234,7 @@ class BotService : AccessibilityService() {
                         if (editText != null) {
                             if(editText.performAction(AccessibilityNodeInfo.ACTION_FOCUS)) {
                                 if (editText.performAction(
-                                        AccessibilityNodeInfo.ACTION_SET_TEXT,
-                                        createTextInput(securityCode)
+                                        AccessibilityNodeInfo.ACTION_SET_TEXT, securityTextBundle
                                     )
                                 ) {
                                     // println("text inputed")
@@ -215,8 +258,8 @@ class BotService : AccessibilityService() {
 
 
     //version 1.0
-    private fun performv1(root: AccessibilityNodeInfo, miniOrderPrice: Int, input:String){
-       if(findNodeWithTk(root, miniOrderPrice)){
+    private fun performv1(root: AccessibilityNodeInfo){
+       if(findNodeWithTk(root)){
            if(fillInputAndConfirm()){
                println("Success")
            }
@@ -224,9 +267,9 @@ class BotService : AccessibilityService() {
     }
     private fun fnwtk(nodeInfo: AccessibilityNodeInfo, miniOrderPrice: Int): AccessibilityNodeInfo? {
         try{
-            if ( nodeInfo.text.toString().contains("TK")) {
+            if ( nodeInfo.text.toString().contains(currency)) {
                 try {
-                    if ((nodeInfo.text.removeSuffix("TK").toString().toDouble()) > miniOrderPrice) {
+                    if ((nodeInfo.text.removeSuffix(currency).toString().toDouble()) > miniOrderPrice) {
                         nodeInfo.parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                         return nodeInfo.parent
                     }
@@ -252,13 +295,13 @@ class BotService : AccessibilityService() {
     private fun fillInputAndConfirm(): Boolean {
             val root = rootInActiveWindow ?: return false
             try {
-                val result = findNodeByClassName(root, "android.widget.EditText")
+                val result = findNodeByClassName(root)
                 val edit = result["editText"]
                 val buy = result["buyOrder"]
                // val close = result["close"]
                // println("edit: $edit \nbuy:$buy \nclose: $close ")
                 if (edit != null && buy != null ) {
-                    if (edit.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, createTextInput(securityCode))) {
+                    if (edit.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, securityTextBundle)) {
                         if( buy.performAction(AccessibilityNodeInfo.ACTION_CLICK)){
                             return true
                         }
@@ -277,27 +320,28 @@ class BotService : AccessibilityService() {
 
         return false
     }
-    private fun createTextInput(input: String): Bundle {
+    private fun createTextInput(input: String) {
         val args = Bundle()
         args.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, input)
-        return args
+        securityTextBundle = args
     }
-    private var i = 0
-    private fun findNodeByClassName(root: AccessibilityNodeInfo?, className: String): Map<String, AccessibilityNodeInfo> {
+    private fun findNodeByClassName(root: AccessibilityNodeInfo?): Map<String, AccessibilityNodeInfo> {
         if (root == null) return emptyMap()
 
-        i++
         val result = mutableMapOf<String, AccessibilityNodeInfo>()
-        if (root.className == className) {
+        if (root.className == "android.widget.EditText") {
             result["editText"] = root
         }
-        if (root.text?.toString() == "Confirm buy" && root.isClickable && root.className == "android.widget.TextView") {
+        if (root.text?.toString() == "Confirm buy" && root.isClickable ) {
           //  result["close"] = root.parent.getChild(2)
             result["buyOrder"] = root
         }
+        if (result.size == 2){
+            return result
+        }
 
         for (i in 0 until root.childCount) {
-            val childResult = findNodeByClassName( root.getChild(i), className)
+            val childResult = findNodeByClassName( root.getChild(i))
             result.putAll(childResult)
             if (result.size == 2){
                 return result}

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <!-- Cover Image -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/eng_cover" />
+
+        <!-- Profile Image and Info -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-50dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/profile_image"
+                android:scaleType="centerCrop"
+                android:background="@drawable/circle_background" />
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="MD ASKAN ALI (SULTAN)"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/profile_job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_name"
+                android:text="SOFTWARE ENGINEER"
+                android:layout_centerHorizontal="true"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect with me on Linkedin"
+                android:textSize="14sp"
+                android:layout_below="@id/profile_job"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/profile_linkedin"
+                android:autoLink="web"
+                android:linksClickable="true"
+            />
+
+            <TextView
+                android:id="@+id/profile_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_linkedin"
+                android:layout_centerHorizontal="true"
+                android:text="Gaziput, Dhaka, Bangladesh"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+        <!-- Stats -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:text="@string/about_software_engineer"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Buttons -->
+
+
+        <!-- Photo and Likes Tabs -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/photos_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photos"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/design_default_color_secondary"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/likes_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Likes"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Photos Grid -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:layout_marginTop="8dp">
+
+            <!-- Sample Photos -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="4dp"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="4dp"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="4dp"
+                android:scaleType="centerCrop" />
+        </GridLayout>
+    </LinearLayout>
+</ScrollView>

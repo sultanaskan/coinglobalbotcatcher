@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">METa MAX</string>
+    <string name="app_name">METa MAX pkr</string>
     <string name="accessibility_service_description">This is accessibility services onfiguration</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -33,4 +33,5 @@
     <string name="minimum_order_price">Minimum order price\n</string>
     <string name="search_user_hint">Search users with username,email or uid</string>
     <string name="search">search_button\n\n</string>
+    <string name="about_software_engineer">I am a dedicated software engineer specializing in creating efficient, scalable, and user-friendly applications. With a strong background in programming and problem-solving, I am passionate about leveraging technology to build innovative solutions. My expertise spans multiple programming languages and development frameworks, enabling me to tackle a wide range of technical challenges and contribute effectively to team projects. Committed to continuous learning, I stay updated on industry trends to ensure high-quality, future-ready solutions.</string>
 </resources>

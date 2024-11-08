@@ -13,6 +13,7 @@
 
     <queries>
         <package android:name="com.coinglobal.bdt" />
+        <package android:name="com.exchange.pkr" />
     </queries>
 
 

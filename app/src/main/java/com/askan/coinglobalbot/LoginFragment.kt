@@ -22,7 +22,6 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
-import java.util.Calendar
 
 class LoginFragment : Fragment() {
     private var emailField: EditText? = null  // Changed to EditText
@@ -103,7 +102,6 @@ class LoginFragment : Fragment() {
                     val user = mAuth?.currentUser
                     // Check if user is admin
                     fetchUserProfile(user!!.uid)
-
                 } else {
                     // Show error message
                     loadingProgression.visibility = View.GONE
@@ -140,7 +138,8 @@ class LoginFragment : Fragment() {
                     // Now, decide based on the accountType if the user is an admin
                     if (user.rule == "admin") {
                         // Navigate to ManagementFragment if the user is an admin
-                        navigateToFragment(ManagementFragment())
+                        navigateToFragment(MainFragment())
+                      //navigateToFragment(ManagementFragment())
                     } else {
                         // Otherwise, navigate to the MainFragment for regular users
                         navigateToFragment(MainFragment())
